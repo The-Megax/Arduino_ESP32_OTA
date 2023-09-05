@@ -12,5 +12,6 @@
  **************************************************************************************/
 
 int lzss_download(ArduinoEsp32OtaReadByteFuncPointer read_byte, ArduinoEsp32OtaWriteByteFuncPointer write_byte, size_t const lzss_file_size);
+size_t lzss_getbytes_size();
 
 #endif /* SSU_LZSS_H_ */

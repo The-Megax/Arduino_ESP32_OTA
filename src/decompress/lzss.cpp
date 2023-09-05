@@ -30,6 +30,7 @@ int bit_buffer = 0, bit_mask = 128;
 unsigned char buffer[N * 2];
 
 static size_t bytes_written_fputc = 0;
+static size_t bytes_read_fgetc = 0;
 
 /**************************************************************************************
    PRIVATE FUNCTIONS
@@ -45,8 +46,6 @@ void lzss_fputc(int const c)
 
 int lzss_fgetc()
 {
-  static size_t bytes_read_fgetc = 0;
-
   /* lzss_file_size is set within SSUBoot:main 
    * and contains the size of the LZSS file. Once
    * all those bytes have been read its time to return
@@ -134,7 +133,8 @@ int getbit(int n) /* get n bits */
 void lzss_decode(void)
 {
   int i, j, k, r, c;
-    
+  uint32_t time = millis();
+
   for (i = 0; i < N - L; i++) buffer[i] = ' ';
   r = N - L;
   while ((c = getbit(1)) != LZSS_EOF) {
@@ -151,6 +151,12 @@ void lzss_decode(void)
         buffer[r++] = c;  r &= (N - 1);
       }
     }
+
+    // Megax
+    if(millis() - time > 5) {
+        vTaskDelay(2);
+        time = millis();
+    }
   }
 }
 
@@ -165,4 +171,8 @@ int lzss_download(ArduinoEsp32OtaReadByteFuncPointer read_byte, ArduinoEsp32OtaW
   LZSS_FILE_SIZE = lzss_file_size;
   lzss_decode();
   return bytes_written_fputc;
+}
+
+size_t lzss_getbytes_size() {
+    return bytes_read_fgetc;
 }

@@ -194,6 +194,8 @@ int Arduino_ESP32_OTA::download(const char * ota_url)
     return static_cast<int>(Error::OtaHeaterMagicNumber);
   }
 
+  _content_length_val = content_length_val;
+
   /* ... start CRC32 from OTA MAGIC ... */
   _crc32 = crc_update(_crc32, &_ota_header.header.magic_number, 12);
 
@@ -229,4 +231,14 @@ Arduino_ESP32_OTA::Error Arduino_ESP32_OTA::update()
 void Arduino_ESP32_OTA::reset()
 {
   ESP.restart();
+}
+
+size_t Arduino_ESP32_OTA::downloaded_byte_size()
+{
+  return lzss_getbytes_size();
+}
+
+int Arduino_ESP32_OTA::content_length()
+{
+  return _content_length_val;
 }

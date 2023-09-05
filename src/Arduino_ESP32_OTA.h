@@ -73,6 +73,15 @@ public:
     OtaDownload          = -12,
   };
 
+  enum class Status : int
+  {
+    None                 = 0,
+    OtaStorageInit       = 1,
+    OtaDownloadFile      = 2,
+    OtaCopy              = 3,
+    OtaDone              = 4,
+  };
+
            Arduino_ESP32_OTA();
   virtual ~Arduino_ESP32_OTA() { }
 
@@ -84,6 +93,9 @@ public:
   Arduino_ESP32_OTA::Error update();
   void reset();
 
+  size_t downloaded_byte_size();
+  int content_length();
+
 private:
 
   Client * _client;
@@ -91,6 +103,7 @@ private:
   size_t _ota_size;
   uint32_t _crc32;
   const char * _ca_cert;
+  int _content_length_val;
 };
 
 #endif /* ARDUINO_ESP32_OTA_H_ */
