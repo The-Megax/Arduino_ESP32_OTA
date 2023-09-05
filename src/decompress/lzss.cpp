@@ -166,6 +166,8 @@ void lzss_decode(void)
 
 int lzss_download(ArduinoEsp32OtaReadByteFuncPointer read_byte, ArduinoEsp32OtaWriteByteFuncPointer write_byte, size_t const lzss_file_size)
 {
+  bytes_written_fputc = 0;
+  bytes_read_fgetc = 0;
   read_byte_fptr = read_byte;
   write_byte_fptr = write_byte;
   LZSS_FILE_SIZE = lzss_file_size;
@@ -174,5 +176,5 @@ int lzss_download(ArduinoEsp32OtaReadByteFuncPointer read_byte, ArduinoEsp32OtaW
 }
 
 size_t lzss_getbytes_size() {
-    return bytes_read_fgetc;
+  return bytes_read_fgetc;
 }
