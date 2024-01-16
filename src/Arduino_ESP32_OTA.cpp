@@ -118,7 +118,8 @@ int Arduino_ESP32_OTA::download(const char * ota_url)
     port = 80;
   } else if (url.protocol_ == "https") {
     _client = new WiFiClientSecure();
-    static_cast<WiFiClientSecure*>(_client)->setCACert(_ca_cert);
+    //static_cast<WiFiClientSecure*>(_client)->setCACert(_ca_cert);
+    static_cast<WiFiClientSecure*>(_client)->setInsecure();
     port = 443;
   } else {
     DEBUG_ERROR("%s: Failed to parse OTA URL %s", __FUNCTION__, ota_url);
