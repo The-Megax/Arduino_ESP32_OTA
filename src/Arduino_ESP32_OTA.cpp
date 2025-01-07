@@ -135,6 +135,7 @@ int Arduino_ESP32_OTA::startDownload(const char * ota_url)
 #endif
     else {
       DEBUG_VERBOSE("%s: CA not configured for download client");
+      static_cast<WiFiClientSecure*>(_client)->setInsecure();
     }
   } else {
     err = Error::UrlParseError;
