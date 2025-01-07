@@ -82,6 +82,15 @@ public:
     OtaDownloadError
   };
 
+  enum class Status : int
+  {
+    None                 = 0,
+    OtaStorageInit       = 1,
+    OtaDownloadFile      = 2,
+    OtaCopy              = 3,
+    OtaDone              = 4,
+  };
+
            Arduino_ESP32_OTA();
   virtual ~Arduino_ESP32_OTA();
 
