@@ -124,6 +124,10 @@ public:
   // 0 if no download is in progress
   size_t downloadSize();
 
+  OTADownloadState getDownloadState() const {
+    return _context ? _context->downloadState : 0;
+  };
+
   virtual void write_byte_to_flash(uint8_t data);
   Arduino_ESP32_OTA::Error verify();
   Arduino_ESP32_OTA::Error update();
