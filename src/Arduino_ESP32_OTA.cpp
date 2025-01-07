@@ -121,7 +121,8 @@ int Arduino_ESP32_OTA::startDownload(const char * ota_url)
     _client = new WiFiClient();
   } else if(strcmp(_context->parsed_url.schema(), "https") == 0) {
     _client = new WiFiClientSecure();
-    if (_ca_cert != nullptr) {
+    static_cast<WiFiClientSecure*>(_client)->setInsecure();
+    /*if (_ca_cert != nullptr) {
       static_cast<WiFiClientSecure*>(_client)->setCACert(_ca_cert);
     }
 #if (ESP_ARDUINO_VERSION < ESP_ARDUINO_VERSION_VAL(3, 0, 4))
@@ -135,8 +136,7 @@ int Arduino_ESP32_OTA::startDownload(const char * ota_url)
 #endif
     else {
       DEBUG_VERBOSE("%s: CA not configured for download client");
-      static_cast<WiFiClientSecure*>(_client)->setInsecure();
-    }
+    }*/
   } else {
     err = Error::UrlParseError;
     goto exit;
