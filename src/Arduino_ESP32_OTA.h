@@ -125,7 +125,7 @@ public:
   size_t downloadSize();
 
   OTADownloadState getDownloadState() const {
-    return _context ? _context->downloadState : 0;
+    return _context ? _context->downloadState : OTADownloadState::OtaDownloadError;
   };
 
   virtual void write_byte_to_flash(uint8_t data);
